@@ -1,4 +1,4 @@
-Sistema de Alocação de Salas
+#Sistema de Alocação de Salas
 Douglas C. de Araújo, Matheus W. M. de Barros
 
 Departamento de Ciência da Computação -
