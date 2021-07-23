@@ -1,0 +1,7 @@
+.reservaItem:hover{
+    cursor:pointer;
+}
+
+.sidebar-footer a{
+    cursor: pointer;
+}
