@@ -1,44 +1,47 @@
-<script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
-<link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<title>Login</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<div class="container">
-    <div class="row">
-        <div class="col-md-6 col-md-offset-3">
-            <div class="panel panel-recover">
-                <div class="panel-heading">
-                    <div class="row">
-                        <div class="col-xs-12">
-                            <h3 id="recover-form-link">Recuperar Conta</h3>
-                        </div>
-                    </div>
-                    <hr>
-                </div>
-                <div class="panel-body">
-                    <div class="row">
-                        <div class="col-lg-12">
-                            <form id="recover-form" role="form" style="display: block;">
-                                <div class="form-group">
-                                    <input type="password" name="password" id="password" tabindex="1" class="form-control" placeholder="Nova senha" value="">
-                                </div>
-                                <div class="form-group">
-                                    <input type="password" name="password" id="password" tabindex="1" class="form-control" placeholder="Confirmar nova senha" value="">
-                                </div>
-                                <div> 
-                                    <label for="passwordsEqual"> As senhas devem ser iguais</label>
-                                </div>
-                                <div class="form-group">
-                                    <div class="row">
-                                        <div class="col-sm-6 col-sm-offset-3">
-                                            <input type="button" (click)="login()" name="recover-submit" id="recover-submit" tabindex="4" class="form-control btn btn-recover" value="Confirmar nova senha">
-                                        </div>
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
+<div class="limiter">
+  <div class="container-login100">
+    <div class="wrap-login100">
+      <div class="login100-pic js-tilt" data-tilt>
+        <img src="https://institucional.ufrrj.br/ccs/files/2019/06/rural_logo02.png" alt="IMG">
+      </div>
+
+      <form class="login100-form validate-form active">
+        <span class="login100-form-title">
+          Nova senha
+        </span>
+
+        <div class="wrap-input100 validate-input" data-validate="Password is required">
+          <input class="input100" type="password" name="pass" placeholder="Senha">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+          </span>
         </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Password is required">
+          <input class="input100" type="password" name="pass" placeholder="Confirmar Senha">
+          <span class="focus-input100"></span>
+          <span class="symbol-input100">
+            <i class="fa fa-lock" aria-hidden="true"></i>
+          </span>
+        </div>
+
+        <div class="container-login100-form-btn">
+          <button [routerLink]="['/login']" class="login100-form-btn">
+            Login
+          </button>
+        </div>
+
+        <div class="text-center p-t-167">
+          <a class="txt3" [routerLink]="['/login']">
+            Fazer login
+            <i class="fa fa-long-arrow-right m-l-5" aria-hidden="true"></i>
+          </a>
+        </div>
+      </form>
     </div>
+  </div>
 </div>

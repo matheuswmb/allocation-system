@@ -10,6 +10,7 @@ import { BarraLateralComponent } from './home/barra-lateral/barra-lateral.compon
 import { ReservaComponent } from './home/reserva/reserva.component';
 import { NovaSenhaComponent } from './nova-senha/nova-senha.component';
 import { ConfirmarCodigoComponent } from './confirmar-codigo/confirmar-codigo.component';
+import { CadastroComponent } from './cadastro/cadastro.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ConfirmarCodigoComponent } from './confirmar-codigo/confirmar-codigo.co
     BarraLateralComponent,
     ReservaComponent,
     NovaSenhaComponent,
-    ConfirmarCodigoComponent
+    ConfirmarCodigoComponent,
+    CadastroComponent
   ],
   imports: [
     BrowserModule,

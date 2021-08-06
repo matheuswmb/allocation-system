@@ -12,8 +12,4 @@ export class ConfirmarCodigoComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  alterarSenha(){
-    this.router.navigate(['/nova-senha'])
-  }
 }
