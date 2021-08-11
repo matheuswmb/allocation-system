@@ -11,6 +11,10 @@ import { ReservaComponent } from './home/reserva/reserva.component';
 import { NovaSenhaComponent } from './nova-senha/nova-senha.component';
 import { ConfirmarCodigoComponent } from './confirmar-codigo/confirmar-codigo.component';
 import { CadastroComponent } from './cadastro/cadastro.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -26,7 +30,11 @@ import { CadastroComponent } from './cadastro/cadastro.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    ReactiveFormsModule,
+    HttpClientModule,
+    FormsModule,
+    CommonModule
   ],
   providers: [],
   bootstrap: [AppComponent]

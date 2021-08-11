@@ -25,9 +25,10 @@
                     </span>
                   </th>
                   <th>Tipo de Sala</th>
-                  <th>Quantidade de Pessoas</th>
                   <th>Motivo</th>
-                  <th>Data</th>
+                  <th>Quantidade de pessoas</th>
+                  <th>Data Hora de Início</th>
+                  <th>Data Hora de Fim</th>
                   <th>Ações</th>
                 </tr>
               </thead>
@@ -40,14 +41,15 @@
                     </span>
                   </td>
                   <td>{{reserva.tipo}}</td>
-                  <td>{{reserva.quantidade}}</td>
                   <td>{{reserva.motivo}}</td>
-                  <td>{{reserva.data}}</td>
+                  <td>{{reserva.quantidade}}</td>
+                  <td>{{reserva.dataInicio | date : 'dd/MM/yyyy HH:mm a'}}</td>
+                  <td>{{reserva.dataFim | date : 'dd/MM/yyyy HH:mm a'}}</td>
                   <td>
                     <a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons"
-                        data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+                        data-toggle="tooltip" title="Edit" (click)="modalEditar(reserva)">&#xE254;</i></a>
                     <a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons"
-                        data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+                        data-toggle="tooltip" title="Delete" (click)="modalExcluir(reserva)">&#xE872;</i></a>
                   </td>
                 </tr>
               </tbody>
@@ -67,11 +69,11 @@
           </div>
         </div>
       </div>
-      <!-- Edit Modal HTML -->
+      <!-- Add Modal HTML -->
       <div id="addEmployeeModal" class="modal fade">
         <div class="modal-dialog">
           <div class="modal-content">
-            <form>
+            <form [formGroup]="formReserva" (ngSubmit)="reservar()">
               <div class="modal-header">
                 <h4 class="modal-title">Incluir Reserva</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -79,24 +81,32 @@
               <div class="modal-body">
                 <div class="form-group">
                   <label>Tipo de Sala</label>
-                  <input  type="text" class="form-control" formControlName="tipo" required>
+                  <select type="select" class="form-control" formControlName="tipo" required>
+                    <option value="Laboratório">Laboratório</option>
+                    <option value="Teórica">Teórica</option>
+                    <option value="Auditório">Auditório</option>
+                  </select>
                 </div>
                 <div class="form-group">
                   <label>Quantidade de pessoas</label>
                   <input type="number" class="form-control" formControlName="quantidade" required>
                 </div>
                 <div class="form-group">
-                  <label>Objetivo</label>
+                  <label>Motivo</label>
                   <textarea class="form-control" formControlName="motivo" required></textarea>
                 </div>
                 <div class="form-group">
-                  <label>Intervalo de utilização</label>
-                  <input type="datetime" class="form-control" formControlName="data" required>
+                  <label>Data de início</label>
+                  <input type="datetime-local" class="form-control" formControlName="dataInicio" required>
+                </div>
+                <div class="form-group">
+                  <label>Data de Fim</label>
+                  <input type="datetime-local" class="form-control" formControlName="dataFim" required>
                 </div>
               </div>
               <div class="modal-footer">
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                <input type="submit" class="btn btn-success" value="Incluir" (click)="reservar()"> 
+                <input type="submit" class="btn btn-success" value="Incluir"> 
               </div>
             </form>
           </div>
@@ -106,7 +116,7 @@
       <div id="editEmployeeModal" class="modal fade">
         <div class="modal-dialog">
           <div class="modal-content">
-            <form>
+            <form [formGroup]="editFormReserva" (ngSubmit)="editar()">
               <div class="modal-header">
                 <h4 class="modal-title">Editar Reserva</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -114,24 +124,32 @@
               <div class="modal-body">
                 <div class="form-group">
                   <label>Tipo de Sala</label>
-                  <input type="text" class="form-control" required>
+                  <select type="select" class="form-control" formControlName="tipo" required>
+                    <option value="Laboratório">Laboratório</option>
+                    <option value="Teórica">Teórica</option>
+                    <option value="Auditório">Auditório</option>
+                  </select>
                 </div>
                 <div class="form-group">
-                  <label>Quantidade de Pessoas</label>
-                  <input type="email" class="form-control" required>
+                  <label>Quantidade de pessoas</label>
+                  <input type="number" class="form-control" formControlName="quantidade" required>
                 </div>
                 <div class="form-group">
                   <label>Motivo</label>
-                  <textarea class="form-control" required></textarea>
+                  <textarea class="form-control" formControlName="motivo" required></textarea>
                 </div>
                 <div class="form-group">
-                  <label>Data Hora</label>
-                  <input type="text" class="form-control" required>
+                  <label>Data de início</label>
+                  <input type="datetime-local" class="form-control" formControlName="dataInicio" required>
+                </div>
+                <div class="form-group">
+                  <label>Data de Fim</label>
+                  <input type="datetime-local" class="form-control" formControlName="dataFim" required>
                 </div>
               </div>
               <div class="modal-footer">
-                <input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-                <input type="submit" class="btn btn-info" value="Salvar">
+                <input type="button" class="btn btn-default" data-dismiss="modal" value="Voltar">
+                <input type="submit" class="btn btn-info" value="Salvar"> 
               </div>
             </form>
           </div>
@@ -141,18 +159,18 @@
       <div id="deleteEmployeeModal" class="modal fade">
         <div class="modal-dialog">
           <div class="modal-content">
-            <form>
+            <form (ngSubmit)="excluirReserva()">
               <div class="modal-header">
-                <h4 class="modal-title">Cancelar Reservas</h4>
+                <h4 class="modal-title">Cancelar Reserva</h4>
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
               </div>
               <div class="modal-body">
-                <p>Você tem certeza que deseja excluir as reservas selecionadas?</p>
+                <p>Você tem certeza que deseja excluir a reserva selecionada?</p>
                 <p class="text-warning"><small><b>Essa ação não poderá ser desfeita.</b></small></p>
               </div>
               <div class="modal-footer">
                 <input type="button" class="btn btn-default" data-dismiss="modal" value="Voltar">
-                <input type="submit" class="btn btn-danger" value="Cancelar Reservas">
+                <input type="submit" class="btn btn-danger" value="Cancelar Reserva">
               </div>
             </form>
           </div>

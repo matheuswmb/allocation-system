@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Reserva } from "../shared/interfaces/reserva.interface";
 import { Router } from '@angular/router';
-import { FormControl, FormGroup, ReactiveFormsModule, FormsModule, FormControlDirective } from '@angular/forms';
+import { FormControl, FormGroup} from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../../environments/environment';
+import { DatePipe } from '@angular/common';
+import { ThrowStmt } from '@angular/compiler';
 
 @Component({
   selector: 'app-reserva',
@@ -10,67 +14,92 @@ import { FormControl, FormGroup, ReactiveFormsModule, FormsModule, FormControlDi
 })
 export class ReservaComponent implements OnInit {
 
-  reservas:Reserva[] = [
-    {
-      "tipo":"Laboratório",
-      "quantidade":"50",
-      "motivo":"Aulas práticas para Programação I",
-      "data":"15/01/21"
-    },
-    {
-      "tipo":"Teórica",
-      "quantidade":"60",
-      "motivo":"Aulas teóricas sobre Cálculo II",
-      "data":"17/01/21"
-    },
-    {
-      "tipo":"Auditório",
-      "quantidade":"90",
-      "motivo":"Palestra Seccim",
-      "data":"18/11/21"
-    },
-    {
-      "tipo":"Laboratório",
-      "quantidade":"30",
-      "motivo":"Aulas práticas sobre Cálculo Aplicado",
-      "data":"17/01/21"
-    },
-    {
-      "tipo":"Teórica",
-      "quantidade":"60",
-      "motivo":"Aulas teóricas sobre Cálculo II",
-      "data":"21/01/21"
-    }
-  ];
+  reservas:Reserva[] = [];
 
-  tipo = new FormControl('');
-  quantidade = new FormControl('');
-  motivo = new FormControl('');
-  data = new FormControl('');
+  formReserva!: FormGroup;
+  excluirReservaForm!: FormGroup;
+  editFormReserva!: FormGroup;
+  reservaAtual!: Reserva;
+  datepipe!: DatePipe;
 
-  
-  constructor(private router: Router) { 
+  constructor(private router: Router, private http: HttpClient) { 
+    this.datepipe=new DatePipe('en_US')
+    this.http.get<any>(`${environment.server}reserva`).subscribe(data => {
+      this.reservas = data;
+    })
+    
   }
 
   ngOnInit(): void {
+    this.createForm(new Reserva());
+    this.editForm(new Reserva());
+    this.excluirForm(new Reserva());
   }
-
-  formReserva: FormGroup;
 
   createForm(reserva: Reserva){
     this.formReserva = new FormGroup({
       tipo: new FormControl(reserva.tipo),
       quantidade: new FormControl(reserva.quantidade),
       motivo: new FormControl(reserva.motivo),
-      data: new FormControl(reserva.data)
+      dataInicio: new FormControl(reserva.dataInicio),
+      dataFim: new FormControl(reserva.dataFim)
     })
   }
-  
-  incluirReserva(){
-    console.log("Alou")
+
+  editForm(reserva: Reserva){
+    this.editFormReserva = new FormGroup({
+      id: new FormControl(reserva.id),
+      tipo: new FormControl(reserva.tipo),
+      quantidade: new FormControl(reserva.quantidade),
+      motivo: new FormControl(reserva.motivo),
+      dataInicio: new FormControl(reserva.dataInicio),
+      dataFim: new FormControl(reserva.dataFim)
+    })
+  }
+
+  excluirForm(reserva: Reserva){
+    this.excluirReservaForm = new FormGroup({
+      id: new FormControl(reserva.id)
+    })
   }
 
   reservar(){
-    this.reservas.push({tipo:this.tipo.value, quantidade:this.quantidade.value, motivo:this.motivo.value, data:this.data.value})
+    //this.formReserva.value.dataInicio = this.datepipe.transform(this.formReserva.value.dataInicio,'dd/MM/yyyy HH:mm')
+    //this.formReserva.value.dataFim = this.datepipe.transform(this.formReserva.value.dataInicio,'dd/MM/yyyy HH:mm')
+    this.http.post<any>(`${environment.server}reserva`, this.formReserva.value).subscribe(data => {
+      window.location.reload();
+    })
+  }
+
+  editar(){
+    
+    this.http.patch<any>(`${environment.server}reserva/${this.editFormReserva.value.id}`, this.editFormReserva.value).subscribe(data => {
+      window.location.reload();
+    })
+    
+  }
+
+  excluirReserva(){
+    console.log(this.excluirReservaForm.value)
+    this.http.delete<any>(`${environment.server}reserva/${this.excluirReservaForm.value.id}`).subscribe(data => {
+      window.location.reload();
+    })
+  }
+
+  modalEditar(reserva: Reserva){
+    this.editFormReserva.patchValue({
+      id: reserva.id,
+      tipo: reserva.tipo,
+      quantidade: reserva.quantidade,
+      motivo: reserva.motivo,
+      dataInicio: reserva.dataInicio,
+      dataFim: reserva.dataFim
+    })
+  }
+
+  modalExcluir(reserva: Reserva){
+    this.excluirReservaForm.patchValue({
+      id: reserva.id
+    })
   }
 }
