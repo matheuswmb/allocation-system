@@ -20,7 +20,7 @@ As afirmações tratadas anteriormente se apresentam como o Produto Mínimo Viá
 As salas se dividem em salas teóricas, auditório ou laboratórios e serão utilizadas nas alocações.
 Uma sala teórica possui um código numérico, um bloco limitado entre as opções biblioteca, administração, informática ou multimídia, um andar (obtido automaticamente pelo sistema através do primeiro dígito do código da mesma), uma capacidade de cadeiras/alunos, quantidade de lousa branca, quantidade de quadro negro e quantidade de projetor. 
 Um laboratório possui todas as informações já elencadas em uma sala teórica com a adição do total de computadores existentes no mesmo.
-Um auditório possui um código numérico, total de cadeiras disponíveis, quantidade de projetores, quantidade de caixas de som.
+Um auditório possui todas as informações elencadas em uma sala teórica com a adição da quantidade de caixas de som.
 É necessário que se possa realizar a inclusão de novas salas no sistema com suas respectivas informações de forma opcional, exceto pelo seu código que deverá ser obrigatório e único, além de realizar alterações de informações das salas já cadastradas no sistema ou excluí-las. Além disso, é importante que seja permitida a listagem das salas cadastradas, com seus respectivos códigos, bloco e capacidade de alunos, enquanto permite a visualização das demais informações em um detalhamento da sala. 
 Por fim, deve ser possível visualizar quais alocações futuras existem para uma determinada sala, de modo que se torne viável obter maiores informações da utilização de uma sala em específico caso seja da necessidade do usuário.
 ### 3.2. Reserva
